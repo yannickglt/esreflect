@@ -1,0 +1,25 @@
+{
+  "name": "reflectionjs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "Reflection.js",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:yannickglt/reflection.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "escodegen": "^1.7.1",
+    "esprima": "^2.7.1"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "watchify": "^3.6.1"
+  },
+  "scripts": {
+    "watch": "watchify src/main.js -o lib/bundle.js",
+    "build": "browserify src/main.js > lib/bundle.js"
+  }
+}
