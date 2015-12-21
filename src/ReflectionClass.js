@@ -1,13 +1,13 @@
 var _ = require('lodash');
 var escodegen = require('escodegen');
-var ReflectionScope = require('./ReflectionScope');
+var Utils = require('./Utils');
 var ReflectionMethod = require('./ReflectionMethod');
 var ReflectionProperty = require('./ReflectionProperty');
 
 var ReflectionClass = function (name, scope, astNode) {
   this.name = name;
-  if (_.isObject(scope) && (!scope instanceof ReflectionScope)) {
-    throw new Error('Parameter scope must be an instance of ReflectionScope.');
+  if (!_.isObject(scope)) {
+    throw new Error('Parameter scope must be an object.');
   }
   this.scope = _.isUndefined(scope) ? null : scope;
   this.scopeName = scope.name;
@@ -31,7 +31,7 @@ var ReflectionClass = function (name, scope, astNode) {
   getThisProperties.bind(this)(classBody);
   getStaticProperties.bind(this)(classBody);
 
-  this.construct = blockToFunction(classBody);
+  this.construct = Utils.blockToFunction(classBody);
 };
 
 ReflectionClass.prototype.getClass = function (scope) {

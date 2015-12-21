@@ -1,10 +1,9 @@
 var _ = require('lodash');
-var ReflectionClass = require('./ReflectionClass');
 
 var ReflectionProperty = function (name, declaringClass, astNode, isPublic, isStatic, value) {
   this.name = name;
-  if (_.isObject(declaringClass) && (!declaringClass instanceof ReflectionClass)) {
-    throw new Error('Parameter scope must be an instance of ReflectionClass.');
+  if (!_.isObject(declaringClass)) {
+    throw new Error('Parameter scope must be a ReflectionClass.');
   }
   this.declaringClass = declaringClass;
   this.astNode = astNode;
@@ -16,10 +15,10 @@ var ReflectionProperty = function (name, declaringClass, astNode, isPublic, isSt
 
 ReflectionProperty.prototype.setAccessible = function (accessible) {
   if (accessible) {
-    publicizeProperty(this.name);
-    //var thisProp = privateToThisProperty(this);
-    //_.clear(this.astNode);
-    //_.extend(this.astNode, thisProp);
+    //publicizeProperty(this.name);
+    var thisProp = privateToThisProperty(this);
+    _.clear(this.astNode);
+    _.extend(this.astNode, thisProp);
   } else {
     // @todo: implement publicToPrivate
   }

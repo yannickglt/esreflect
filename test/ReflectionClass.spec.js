@@ -32,7 +32,7 @@ describe('ReflectionClass', function () {
     };
 
     return TestClass;
-  };
+  }
 
   it('should work', function () {
 

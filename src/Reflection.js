@@ -232,22 +232,24 @@ var getFunctions = function (block) {
   }
 });
  */
-function Controller () {
+angular.factory('TestClassFactory', function TestClassFactory () {
+
   var TestClass = function () {
     this.publicThisProperty = "publicThisProperty";
     this.publicThisMethod = function () {
 
     };
 
-    var privateConstructorMethod = function () {
+    var privateConstructorMethod = function () { // this.privateConstructorMethod = function () { };
 
     };
-    var privateProperty = "privateProperty";
+    var privateProperty = "privateProperty"; // this.privateProperty = "privateProperty";
   };
 
   var privateStaticProperty = "privateStaticProperty";
-  var privateStaticMethod = function () {
 
+  var privateStaticMethod = function () {
+    privateStaticProperty =  "changedPrivateStaticProperty";
   };
 
   TestClass.prototype.publicProtoProperty = "publicProtoProperty";
@@ -261,14 +263,47 @@ function Controller () {
   };
 
   return TestClass;
+});
+
+var TestClass = angular.factory('TestClassFactory');
+expect(new TestClass().privateProperty).toBeDefined();
+expect(new TestClass().privateConstructorMethod).toBeFunction();
+
+expect(Dictionary.TestClassFactory.privateStaticMethod).toBeFunction();
+expect(Dictionary.TestClassFactory.TestClass.privateConstructorMethod).toBeFunction(); // Work on both the dictionary and the instance
+
+
+
+function Factory () {
+
+  var privateProeprty;
+
+  var privateMethod = function () {
+    privateProeprty = 'changedprivateProeprty';
+  };
+
+  return {
+    publicMethod: function () {
+      privateMethod();
+    }
+  };
+
 }
-/*
+
+expect(angular.service('Factory').publicMethod).toBeFunction();
+expect(angular.service('Factory').privateMethod).toBeFunction();
+
+
+
+var ctrlService = angular.controller('Controller');
+ctrlService.__scope.privateStaticMethod();
+expect(ctrlService.__scope.privateStaticProperty).toBe('changedPrivateStaticProperty');
+
 var scope = new ReflectionScope(Controller);
 console.log(scope);
 //scope.classes.TestClass.properties.privateProperty.setAccessible(true);
 scope.classes.TestClass.getClass();
 console.log(escodegen.generate(scope.astNode));
-*/
 /*
  this.$$toto; // Object.defineProperty(this, '$$toto', { ... });
  this.$$_privateConstructorFunction = _privateConstructorFunction;
