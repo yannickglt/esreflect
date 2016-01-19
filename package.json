@@ -1,14 +1,14 @@
 {
   "name": "reflectionjs",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
-  "main": "Reflection.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "git@bitbucket.org:yannickglt/reflection.js.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yannick Galatol <yannick.galatol@gmail.com>",
+  "license": "MIT",
   "dependencies": {
     "lodash": "^3.10.1",
     "escodegen": "^1.7.1",
