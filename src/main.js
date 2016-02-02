@@ -1,3 +1,5 @@
-//window.ReflectionScope = require('./ReflectionScope');
+window.ReflectionVariable = require('./ReflectionVariable');
+window.ReflectionFunction = require('./ReflectionFunction');
+window.ReflectionScope = require('./ReflectionScopeTrait');
+window.ReflectionFile = require('./ReflectionFile');
 window.Reflection = require('./Reflection');
-window.escodegen = require('escodegen');

@@ -1,7 +1,10 @@
-var ReflectionScope = require('../src/ReflectionScope');
-var ReflectionClass = require('../src/ReflectionClass');
+var ReflectionFile = require('../src/ReflectionFile');
 
-describe('ReflectionClass', function () {
+describe('ReflectionFile', function () {
+
+  beforeEach(function () {
+
+  });
 
   function mock() {
     var TestClass = function () {
