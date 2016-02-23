@@ -4,19 +4,17 @@ var Reflection = require('./Reflection');
 var ReflectionScopeAbstract = function (node) {
   Reflection.call(this, node);
 
-  this._body = null;
-  this._functions = [];
-  this._variables = [];
+  this._functions = null;
+  this._variables = null;
 };
 
 ReflectionScopeAbstract.prototype = Object.create(Reflection.prototype);
 
-ReflectionScopeAbstract.prototype._extractFunctionAndVariables = function () {
-  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "_extractFunctionAndVariables"');
+ReflectionScopeAbstract.prototype._getBody = function () {
+  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "_getBody"');
 };
-
 ReflectionScopeAbstract.prototype.getFunctionsByType = function (type) {
-  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "ReflectionScopeAbstract"');
+  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getFunctionsByType"');
 };
 
 ReflectionScopeAbstract.prototype.getFunctionsByName = function (name, type) {

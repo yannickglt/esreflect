@@ -14,10 +14,13 @@ var ReflectionFile = function (name, node) {
   this._name = name;
   ReflectionScopeAbstract.call(this, node);
   _.extend(this, require('./ReflectionScopeTrait'));
-  this._extractFunctionAndVariables();
 };
 
 ReflectionFile.prototype = Object.create(ReflectionScopeAbstract.prototype);
+
+ReflectionFile.prototype._getBody = function () {
+  return _.get(this._node, 'body');
+};
 
 ReflectionFile.prototype.getName = function () {
   return this._name;

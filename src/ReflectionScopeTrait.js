@@ -1,15 +1,17 @@
 var _ = require('lodash');
+var JSONSelect = require('JSONSelect');
 var ReflectionFunction = require('./ReflectionFunction');
+var ReflectionFunctionDeclaration = require('./ReflectionFunctionDeclaration');
+var ReflectionFunctionExpression = require('./ReflectionFunctionExpression');
+var ReflectionAssignedFunctionExpression = require('./ReflectionAssignedFunctionExpression');
+var ReflectionVariable = require('./ReflectionVariable');
 
 var ReflectionScopeTrait = {
-  _extractFunctionAndVariables: function (node) {
-    this._body = getBody(node);
-    this._functions = getFunctions(this._body);
-    this._variables = getVariables(this._body);
-  },
   getFunctionsByType: function (type) {
     checkFunctionType(type);
-    return _.filter(this._functions, { '_type': type });
+    return _.filter(getFunctions.call(this), function (fn) {
+      return fn.getType() === type;
+    });
   },
   getFunctionsByName: function (name, type) {
     if (_.isObject(name)) {
@@ -17,34 +19,32 @@ var ReflectionScopeTrait = {
       name = name.name;
     }
     checkFunctionType(type);
-    return _.filter(this._functions, { '_name': name, '_type': type });
-  },
-  getAnonymousFunctions: function (name) {
-    var predicate = { '_type': ReflectionFunction.TYPE.ANONYMOUS };
-    if (!_.isUndefined(name)) {
-      predicate._name = name;
-    }
-    return _.filter(this._functions, predicate);
+    return _.filter(getFunctions.call(this), function (fn) {
+      return (fn.getType() === type) && (fn.getName() === name);
+    });
   },
   getFunctionDeclarations: function (name) {
-    var predicate = { '_type': ReflectionFunction.TYPE.DECLARATION };
-    if (!_.isUndefined(name)) {
-      predicate._name = name;
-    }
-    return _.filter(this._functions, predicate);
+    return _.filter(getFunctions.call(this), function (fn) {
+      return (fn.getType() === ReflectionFunction.TYPE.DECLARATION) && (_.isUndefined(name) || fn.getName() === name);
+    });
   },
   getFunctionExpressions: function (name) {
-    var predicate = { '_type': ReflectionFunction().TYPE.EXPRESSION };
-    if (!_.isUndefined(name)) {
-      predicate._name = name;
-    }
-    return _.filter(this._functions, predicate);
+    return _.filter(getFunctions.call(this), function (fn) {
+      return (fn.getType() === ReflectionFunction.TYPE.EXPRESSION) && (_.isUndefined(name) || fn.getName() === name || (fn.isAssigned() && fn.getAssignedName() === name));
+    });
+  },
+  getAnonymousFunctions: function () {
+    return _.filter(getFunctions.call(this), function (fn) {
+      return (fn.getType() === ReflectionFunction.TYPE.EXPRESSION) && fn.isAnonymous();
+    });
   },
   getVariables: function (name) {
     if (_.isUndefined(name)) {
-      return _.clone(this._variables);
+      return _.clone(getVariables.call(this));
     } else {
-      return _.filter(this._variables, { '_name': name });
+      return _.filter(getVariables.call(this), function (variable) {
+        return variable.getName() === name;
+      });
     }
   },
   getStartLine: function () {
@@ -55,75 +55,60 @@ var ReflectionScopeTrait = {
   }
 };
 
-function getBody(node) {
-  if (node.type === 'Program') {
-    return _.get(node, 'body.0.body');
+function getFunctions() {
+  if (_.isNull(this._functions)) {
+    var body = this._getBody();
+    this._functions = _.union(
+      getAssignedFunctionExpressions(body),
+      getNonAssignedFunctionExpressions(body),
+      getFunctionDeclarations(body)
+    );
   }
-  else if (node.type === 'VariableDeclaration') {
-    return _.get(node, 'declarations.0.init.body');
-  }
-  else if (node.type === 'FunctionDeclaration') {
-    return _.get(node, 'body');
-  }
+  return this._functions;
 }
 
-function getFunctions(block) {
-  var functions = [];
-  if (block) {
-    _.forEach(block.body, function (node) {
-
-      // for: var doSomething = function ()
-      if ((node.type === 'VariableDeclaration') &&
-        (_.get(node, 'declarations.length') === 1) &&
-        (_.get(node, 'declarations.0.type') === 'VariableDeclarator') &&
-        (_.get(node, 'declarations.0.init.type') === 'FunctionExpression')) {
-
-        var variableName = _.get(node, 'declarations.0.id.name');
-        if (!_.isNull(variableName)) {
-          functions.push(_.assign(new ReflectionFunction(variableName), { '_node': node, '_type': ReflectionFunction.TYPE.EXPRESSION }));
-        }
-
-        // Named function expression
-        var namedFunction = _.get(node, 'declarations.0.init.id');
-        if (!_.isNull(namedFunction)) {
-          functions.push(_.assign(new ReflectionFunction(namedFunction.name), { '_node': node, '_type': ReflectionFunction.TYPE.DECLARATION }));
-        }
-      }
-      // for: function doSomething ()
-      else if (node.type === 'FunctionDeclaration') {
-        functions.push(_.assign(new ReflectionFunction(node.id.name), { '_node': node, '_type': ReflectionFunction.TYPE.DECLARATION }));
-      }
-    });
+function getVariables() {
+  if (_.isNull(this._variables)) {
+    var body = this._getBody();
+    this._variables = getVars(body);
   }
-  return functions;
+  return this._variables;
 }
 
-function getVariables(block) {
-  var variables = [];
-  if (block) {
-    _.forEach(block.body, function (node) {
+function getVars(json) {
+  return _(JSONSelect.match(':has(:root > .type:val("VariableDeclarator")):has(:root > .init > number.value, :root > .init > string.value, :root > .init > boolean.value)', json))
+    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .type:val("VariableDeclarator")):has(:root > .init > number.value, :root > .init > string.value, :root > .init > boolean.value)', json))
+    .map(function (node) {
+      return new ReflectionVariable(node);
+    })
+    .value();
+}
 
-      // for: var something = "foo"
-      if ((node.type === 'VariableDeclaration') &&
-        (_.get(node, 'declarations.length') === 1) &&
-        (_.get(node, 'declarations.0.type') === 'VariableDeclarator') &&
-        (_.get(node, 'declarations.0.init.type') !== 'FunctionExpression')) {
+function getNonAssignedFunctionExpressions(json) {
+  return _(JSONSelect.match(':has(:root > .type:val("FunctionExpression"))', json))
+    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .type:val("FunctionExpression"))', json))
+    .map(function (node) {
+      return new ReflectionFunctionExpression(node);
+    })
+    .value();
+}
 
-        var variableName = _.get(node, 'declarations.0.id.name');
-        if (!_.isNull(variableName)) {
-          var init = _.get(node, 'declarations.0.init');
-          var initialValue;
-          if (!_.isNull(init) && init.hasOwnProperty('value')) {
-            initialValue = init.value;
-          } else {
-            initialValue = undefined;
-          }
-          variables.push(_.assign(new ReflectionVariable(variableName), { '_node': node }));
-        }
-      }
-    });
-  }
-  return variables;
+function getFunctionDeclarations(json) {
+  return _(JSONSelect.match(':has(:root > .type:val("FunctionDeclaration"))', json))
+    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .type:val("FunctionDeclaration"))', json))
+    .map(function (node) {
+      return new ReflectionFunctionDeclaration(node);
+    })
+    .value();
+}
+
+function getAssignedFunctionExpressions(json) {
+  return _(JSONSelect.match(':has(:root > .type:val("VariableDeclarator")):has(:root > .init > .type:val("FunctionExpression"))', json))
+    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .init > .type:val("FunctionExpression"))', json))
+    .map(function (node) {
+      return new ReflectionAssignedFunctionExpression(node);
+    })
+    .value();
 }
 
 function checkFunctionType(type) {
