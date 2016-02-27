@@ -18,9 +18,11 @@ var ReflectionScopeTrait = {
       type = name.type;
       name = name.name;
     }
-    checkFunctionType(type);
+    if (!_.isUndefined(type)) {
+      checkFunctionType(type);
+    }
     return _.filter(getFunctions.call(this), function (fn) {
-      return (fn.getType() === type) && (fn.getName() === name);
+      return (_.isUndefined(type) || fn.getType() === type) && (fn.getName() === name);
     });
   },
   getFunctionDeclarations: function (name) {
@@ -52,17 +54,26 @@ var ReflectionScopeTrait = {
   },
   getEndLine: function () {
     return _.get(this._node, 'loc.end.line');
+  },
+  getStartColumn: function () {
+    return _.get(this._node, 'loc.start.column');
+  },
+  getEndColumn: function () {
+    return _.get(this._node, 'loc.end.column');
   }
 };
 
 function getFunctions() {
   if (_.isNull(this._functions)) {
     var body = this._getBody();
-    this._functions = _.union(
-      getAssignedFunctionExpressions(body),
-      getNonAssignedFunctionExpressions(body),
-      getFunctionDeclarations(body)
-    );
+    this._functions = _()
+      .union(
+        getAssignedFunctionExpressions(body),
+        getNonAssignedFunctionExpressions(body),
+        getFunctionDeclarations(body)
+      )
+      .sortBy(['loc.start.line', 'loc.start.column'])
+      .value();
   }
   return this._functions;
 }
@@ -86,7 +97,7 @@ function getVars(json) {
 
 function getNonAssignedFunctionExpressions(json) {
   return _(JSONSelect.match(':has(:root > .type:val("FunctionExpression"))', json))
-    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .type:val("FunctionExpression"))', json))
+    .difference(JSONSelect.match(':has(:root > .type:val("FunctionExpression"),:root > .type:val("FunctionDeclaration")) :has(:root > .type:val("FunctionExpression")), :has(:root > .type:val("VariableDeclarator")):has(:root > .init > .type:val("FunctionExpression")) > .init', json))
     .map(function (node) {
       return new ReflectionFunctionExpression(node);
     })

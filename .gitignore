@@ -5,3 +5,5 @@ lib/bundle.js
 .idea
 dist
 dist/*
+reports
+reports/*

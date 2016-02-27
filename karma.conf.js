@@ -1,7 +1,7 @@
+var istanbul = require('browserify-istanbul');
+
 module.exports = function (karma) {
   karma.set({
-
-    frameworks: ['jasmine', 'browserify'],
 
     files: [
       'vendor/external.js',
@@ -9,20 +9,33 @@ module.exports = function (karma) {
     ],
 
     preprocessors: {
-      'test/**/*.js': ['browserify']
+      'src/**/Reflection*.js': ['coverage', 'reflection'],
+      'test/**/*.spec.js': 'browserify'
+    },
+
+    frameworks: ['jasmine', 'browserify', 'reflection'],
+
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      type: 'cobertura',
+      dir: 'reports/coverage/',
+      file: 'coverage.xml'
     },
 
     browsers: ['PhantomJS'],
 
     logLevel: 'LOG_DEBUG',
 
-    singleRun: true,
+    singleRun: false,
 
     autoWatch: true,
 
     browserify: {
-      debug: true,
-      transform: ['brfs', 'browserify-shim']
+      debug: false,
+      transform: ['brfs', 'browserify-shim', istanbul({
+        ignore: ['node_modules/**', 'test/**']
+      })]
     }
   });
 };

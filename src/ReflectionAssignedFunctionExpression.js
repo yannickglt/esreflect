@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var ReflectionFunctionExpression = require('./ReflectionFunctionExpression');
 
 var ReflectionAssignedFunctionExpression = function (node) {
@@ -8,6 +9,10 @@ ReflectionAssignedFunctionExpression.prototype = Object.create(ReflectionFunctio
 
 ReflectionAssignedFunctionExpression.prototype._getBody = function () {
   return _.get(this._node, 'init.body');
+};
+
+ReflectionAssignedFunctionExpression.prototype.isAnonymous = function () {
+  return _.isNull(_.get(this._node, 'init.id', null));
 };
 
 ReflectionAssignedFunctionExpression.prototype.isAssigned = function () {
@@ -27,6 +32,7 @@ ReflectionAssignedFunctionExpression.prototype.getParameters = function () {
     .chain()
     .get('init.params')
     .map('name')
+    .compact()
     .value();
 };
 

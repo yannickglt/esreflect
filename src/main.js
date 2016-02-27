@@ -6,5 +6,3 @@ window.ReflectionFunction = require('./ReflectionFunction');
 window.ReflectionScopeAbstract = require('./ReflectionScopeAbstract');
 window.ReflectionFile = require('./ReflectionFile');
 window.Reflection = require('./Reflection');
-// @todo remove escodegen
-window.escodegen = require('escodegen');

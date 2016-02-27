@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var Reflection = require('./Reflection');
 
 var ReflectionVariable = function (node) {

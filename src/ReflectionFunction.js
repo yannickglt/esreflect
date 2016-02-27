@@ -38,7 +38,7 @@ ReflectionFunction.prototype.getClosure = function (context) {
 
 ReflectionFunction.prototype.invoke = function (context, thisArg) {
   var closure = this.getClosure(context);
-  return closure.apply(thisArg, _.rest(arguments));
+  return closure.apply(thisArg, _.drop(arguments, 2));
 };
 
 ReflectionFunction.prototype.invokeArgs = function (context, thisArg, argsAsArray) {
@@ -51,6 +51,7 @@ ReflectionFunction.prototype.getParameters = function () {
     .chain()
     .get('params')
     .map('name')
+    .compact()
     .value();
 };
 
@@ -63,7 +64,7 @@ ReflectionFunction.prototype.toString = function () {
   }
   var name = this.getName() || '';
   var params = this.getParameters();
-  return 'function ' + name + '(' + params.join(', ') + ')' + funcBody + ';';
+  return 'function ' + name + '(' + params.join(', ') + ')' + funcBody;
 };
 
 module.exports = ReflectionFunction;
