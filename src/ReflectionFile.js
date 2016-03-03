@@ -8,7 +8,13 @@ var ReflectionFile = function (name, node) {
     if (typeof Reflection.__files[name] === 'undefined') {
       throw new Error('File declaration of "' + name + '" could not be found');
     }
-    node = Reflection.__files[name];
+    if (Reflection.__files[name].instance) {
+      return Reflection.__files[name].instance;
+    } else {
+      node = Reflection.__files[name].node;
+      this._filePath = Reflection.__files[name].path;
+      Reflection.__files[name].instance = this;
+    }
   }
 
   this._name = name;
@@ -24,6 +30,10 @@ ReflectionFile.prototype._getBody = function () {
 
 ReflectionFile.prototype.getName = function () {
   return this._name;
+};
+
+ReflectionFile.prototype.getFilePath = function () {
+  return this._filePath;
 };
 
 ReflectionFile.prototype.getFileName = function () {

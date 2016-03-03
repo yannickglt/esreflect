@@ -25,9 +25,18 @@ describe('ReflectionFile', function () {
 
     it('should retrieve the node from the registry if not given as parameter', function () {
       var node = {};
-      Reflection.__files['dir/file.js'] = node;
+      Reflection.__files['dir/file.js'] = { node: node, path: '/full/file/path/dir/file.js' };
       var reflectedFile = new ReflectionFile('dir/file.js');
       expect(reflectedFile._node).toBe(node);
+    });
+
+    it('should store a file instance into the cache like singletons', function () {
+      var node = {};
+      Reflection.__files['dir/file.js'] = { node: node, path: '/full/file/path/dir/file.js' };
+      var reflectedFile = new ReflectionFile('dir/file.js');
+      expect(Reflection.__files['dir/file.js'].instance).toBe(reflectedFile);
+      var reflectedFile2 = new ReflectionFile('dir/file.js');
+      expect(reflectedFile).toBe(reflectedFile2);
     });
 
     it('should throw an error if no node is given and the name does not refer to a registered file', function () {
@@ -96,6 +105,13 @@ describe('ReflectionFile', function () {
 
     it('should return the file name', function () {
       expect(reflectedFile.getFileName()).toBe('file');
+    });
+
+    it('should return the file path', function () {
+      var node = {};
+      Reflection.__files['dir/file.js'] = { node: node, path: '/full/file/path/dir/file.js' };
+      var reflectedFile = new ReflectionFile('dir/file.js');
+      expect(reflectedFile.getFilePath()).toBe('/full/file/path/dir/file.js');
     });
   });
 

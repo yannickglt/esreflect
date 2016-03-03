@@ -9,7 +9,7 @@ var ReflectionFunctionExpression = function (node) {
 ReflectionFunctionExpression.prototype = Object.create(ReflectionFunction.prototype);
 
 ReflectionFunctionExpression.prototype.isAnonymous = function () {
-  return _.isNull(_.get(this._node, 'id', null));
+  return _.isEmpty(_.get(this._node, 'id', null));
 };
 
 ReflectionFunctionExpression.prototype.isAssigned = function () {

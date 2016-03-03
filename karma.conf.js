@@ -27,15 +27,22 @@ module.exports = function (karma) {
 
     logLevel: 'LOG_DEBUG',
 
-    singleRun: false,
+    singleRun: true,
 
     autoWatch: true,
+
+    //browserNoActivityTimeout: 20000,
 
     browserify: {
       debug: false,
       transform: ['brfs', 'browserify-shim', istanbul({
-        ignore: ['node_modules/**', 'test/**']
-      })]
+        ignore: ['**/node_modules/**', '**/test/**'],
+        instrumenterConfig: {
+          backdoor: {
+            omitTrackerSuffix: true
+          }
+        }
+      }), 'browserify-reflection']
     }
   });
 };
