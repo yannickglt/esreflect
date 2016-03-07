@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var ReflectionFunctionExpression = require('./ReflectionFunctionExpression');
 
-var ReflectionAssignedFunctionExpression = function (node) {
+  var ReflectionAssignedFunctionExpression = function (node) {
   ReflectionFunctionExpression.call(this, node);
 };
 

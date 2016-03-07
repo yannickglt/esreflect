@@ -21,7 +21,7 @@ ReflectionScopeAbstract.prototype.getFunctionsByName = function (name, type) {
   throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getFunctionsByName"');
 };
 
-ReflectionScopeAbstract.prototype.getAnonymousFunctions = function (name) {
+ReflectionScopeAbstract.prototype.getAnonymousFunctions = function () {
   throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getAnonymousFunctions"');
 };
 
@@ -43,6 +43,14 @@ ReflectionScopeAbstract.prototype.getStartLine = function () {
 
 ReflectionScopeAbstract.prototype.getEndLine = function () {
   throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getEndLine"');
+};
+
+ReflectionScopeAbstract.prototype.getStartColumn = function () {
+  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getStartColumn"');
+};
+
+ReflectionScopeAbstract.prototype.getEndColumn = function () {
+  throw new Error('Implementing interface "ReflectionScopeAbstract" should override the method "getEndColumn"');
 };
 
 module.exports = ReflectionScopeAbstract;
