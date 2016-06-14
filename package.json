@@ -1,11 +1,11 @@
 {
-  "name": "reflectionjs",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/reflection.js",
+  "name": "esreflect",
+  "version": "0.0.1",
+  "description": "ECMAScript library providing a reflection API for ECMAScript",
+  "main": "dist/esreflect.js",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:yannickglt/reflection.js.git"
+    "url": "https://github.com/yannickglt/esreflect.git"
   },
   "author": "Yannick Galatol <yannick.galatol@gmail.com>",
   "license": "MIT",
@@ -32,8 +32,8 @@
     "watchify": "^3.6.1"
   },
   "scripts": {
-    "watch": "watchify src/main.js -o dist/reflection.js",
-    "build": "browserify src/main.js > dist/reflection.js",
+    "watch": "watchify src/main.js -o dist/esreflect.js",
+    "build": "browserify src/main.js > dist/esreflect.js",
     "test": "karma start"
   },
   "browserify-shim": {
