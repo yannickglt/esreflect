@@ -1,25 +1,42 @@
 {
-  "name": "reflectionjs",
-  "version": "0.0.0",
-  "description": "",
-  "main": "Reflection.js",
+  "name": "esreflect",
+  "version": "0.0.1",
+  "description": "ECMAScript library providing a reflection API for ECMAScript",
+  "main": "dist/esreflect.js",
   "repository": {
     "type": "git",
-    "url": "git@bitbucket.org:yannickglt/reflection.js.git"
+    "url": "https://github.com/yannickglt/esreflect.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yannick Galatol <yannick.galatol@gmail.com>",
+  "license": "MIT",
   "dependencies": {
-    "lodash": "^3.10.1",
+    "JSONSelect": "^0.4.0",
     "escodegen": "^1.7.1",
-    "esprima": "^2.7.1"
+    "esprima": "^2.7.1",
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
+    "brfs": "^1.4.1",
     "browserify": "^12.0.1",
+    "browserify-istanbul": "^1.0.0",
+    "browserify-shim": "^3.8.11",
+    "browserify-reflection": "~1.0.0",
+    "istanbul": "^0.4.2",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.15",
+    "karma-browserify": "^4.4.2",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "phantomjs": "^1.9.19",
     "watchify": "^3.6.1"
   },
   "scripts": {
-    "watch": "watchify src/main.js -o lib/bundle.js",
-    "build": "browserify src/main.js > lib/bundle.js"
+    "watch": "watchify src/main.js -o dist/esreflect.js",
+    "build": "browserify src/main.js > dist/esreflect.js",
+    "test": "karma start"
+  },
+  "browserify-shim": {
+    "external": "global:External"
   }
 }
