@@ -1,6 +1,6 @@
 {
   "name": "esreflect",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "ECMAScript library providing a reflection API for ECMAScript",
   "main": "dist/esreflect.js",
   "repository": {
@@ -20,7 +20,7 @@
     "browserify": "^12.0.1",
     "browserify-istanbul": "^1.0.0",
     "browserify-shim": "^3.8.11",
-    "browserify-reflection": "~1.0.0",
+    "browserify-reflection": "^0.1.0",
     "istanbul": "^0.4.2",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.15",
