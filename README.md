@@ -21,6 +21,7 @@ You may also be interested in:
 
 ## Usage
 
+ESReflect uses `browserify-reflection` and `ESReflect` to unit tests private methods.
 See the [API](API.md) documentation for an exhaustive list of classes and methods.
 
 ## Roadmap
