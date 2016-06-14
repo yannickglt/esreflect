@@ -18,9 +18,10 @@ module.exports = function (karma) {
     reporters: ['progress', 'coverage'],
 
     coverageReporter: {
-      type: 'cobertura',
-      dir: 'reports/coverage/',
-      file: 'coverage.xml'
+      type: 'lcovonly',
+      dir: 'reports',
+      subdir: 'coverage',
+      file: 'lcov.info'
     },
 
     browsers: ['PhantomJS'],
