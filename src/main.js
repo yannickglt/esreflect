@@ -1,8 +1,8 @@
-window.ReflectionVariable = require('./ReflectionVariable');
-window.ReflectionAssignedFunctionExpression = require('./ReflectionAssignedFunctionExpression');
-window.ReflectionFunctionExpression = require('./ReflectionFunctionExpression');
-window.ReflectionFunctionDeclaration = require('./ReflectionFunctionDeclaration');
-window.ReflectionFunction = require('./ReflectionFunction');
-window.ReflectionScopeAbstract = require('./ReflectionScopeAbstract');
-window.ReflectionFile = require('./ReflectionFile');
-window.Reflection = require('./Reflection');
+global.ReflectionVariable = require('./ReflectionVariable');
+global.ReflectionAssignedFunctionExpression = require('./ReflectionAssignedFunctionExpression');
+global.ReflectionFunctionExpression = require('./ReflectionFunctionExpression');
+global.ReflectionFunctionDeclaration = require('./ReflectionFunctionDeclaration');
+global.ReflectionFunction = require('./ReflectionFunction');
+global.ReflectionScopeAbstract = require('./ReflectionScopeAbstract');
+global.ReflectionFile = require('./ReflectionFile');
+global.Reflection = require('./Reflection');
