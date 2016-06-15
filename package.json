@@ -42,7 +42,10 @@
   "scripts": {
     "watch": "watchify src/main.js -o dist/esreflect.js",
     "build": "browserify src/main.js > dist/esreflect.js",
-    "test": "karma start"
+    "test": "karma start",
+    "bump": "npm run build && npm version patch && npm publish && git push --tags origin master",
+    "bump:minor": "npm run build && npm version minor && npm publish && git push --tags origin master",
+    "bump:major": "npm run build && npm version major && npm publish && git push --tags origin master"
   },
   "browserify-shim": {
     "external": "global:External"
