@@ -1,11 +1,11 @@
 # ESReflect
+[![Build Status](https://img.shields.io/travis/yannickglt/esreflect.svg?style=flat-square)](https://travis-ci.org/yannickglt/esreflect)
+[![Coveralls](https://img.shields.io/coveralls/yannickglt/esreflect.svg?branch=master)](https://coveralls.io/github/yannickglt/esreflect)
 [![npm version](https://img.shields.io/npm/v/esreflect.svg?style=flat-square)](https://www.npmjs.org/package/esreflect)
 [![npm downloads](https://img.shields.io/npm/dm/esreflect.svg?style=flat-square)](http://npm-stat.com/charts.html?package=esreflect&from=2015-08-01)
-[![Build Status](https://img.shields.io/travis/yannickglt/esreflect.svg?style=flat-square)](https://travis-ci.org/yannickglt/esreflect)
-[![Coveralls](https://img.shields.io/coveralls/yannickglt/esreflect.svg)](https://coveralls.io/github/yannickglt/esreflect)
 [![npm dependencies](https://img.shields.io/david/yannickglt/esreflect.svg)](https://david-dm.org/yannickglt/esreflect)
 [![npm devDependencies](https://img.shields.io/david/dev/yannickglt/esreflect.svg)](https://david-dm.org/yannickglt/esreflect)
-[![npm license](https://img.shields.io/npm/l/reflectionhs.svg)](https://www.npmjs.org/package/esreflect)
+[![npm license](https://img.shields.io/npm/l/esreflect.svg)](https://www.npmjs.org/package/esreflect)
 
 ESReflect is an ECMAScript (also popularly known as [JavaScript](https://en.wikipedia.org/wiki/JavaScript)) library providing a reflection API for [ECMAScript](http://www.ecma-international.org/publications/standards/Ecma-262.htm). ESReflect uses [esprima](https://github.com/jquery/esprima) and [escodegen](https://github.com/estools/escodegen) to parse and generate code accodring to the [Mozilla's Parser API](https://developer.mozilla.org/en/SpiderMonkey/Parser_API).
 
