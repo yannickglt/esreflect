@@ -1,6 +1,6 @@
 {
   "name": "esreflect",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "ECMAScript library providing a reflection API for ECMAScript",
   "main": "dist/esreflect.js",
   "repository": {
@@ -32,6 +32,13 @@
     "phantomjs": "^1.9.19",
     "watchify": "^3.6.1"
   },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "API.md",
+    "LICENSE"
+  ],
   "scripts": {
     "watch": "watchify src/main.js -o dist/esreflect.js",
     "build": "browserify src/main.js > dist/esreflect.js",
