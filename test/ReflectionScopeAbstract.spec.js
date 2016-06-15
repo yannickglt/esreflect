@@ -60,5 +60,13 @@ describe('ReflectionScopeAbstract', function () {
       expect(reflectedScope.getEndLine).toThrowError('Implementing interface "ReflectionScopeAbstract" should override the method "getEndLine"');
     });
 
+    it('should throw an error if the method getStartColumn is not overridden', function () {
+      expect(reflectedScope.getStartColumn).toThrowError('Implementing interface "ReflectionScopeAbstract" should override the method "getStartColumn"');
+    });
+
+    it('should throw an error if the method getEndColumn is not overridden', function () {
+      expect(reflectedScope.getEndColumn).toThrowError('Implementing interface "ReflectionScopeAbstract" should override the method "getEndColumn"');
+    });
+
   });
 });

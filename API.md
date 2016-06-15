@@ -12,6 +12,8 @@
   - [ReflectionScope.getFunctionsByType](#reflectionscopegetfunctionsbytype) - Gets functions from given type
   - [ReflectionScope.getStartLine](#reflectionscopegetstartline) - Gets starting line number
   - [ReflectionScope.getEndLine](#reflectionscopegetendline) - Gets ending line number
+  - [ReflectionScope.getStartColumn](#reflectionscopegetstartcolumn) - Gets starting column number
+  - [ReflectionScope.getEndColumn](#reflectionscopegetendcolumn) - Gets ending column number
   - [ReflectionScope.getVariables](#reflectionscopegetvariables) - Gets variables
 - [ReflectionFile](#reflectionfile) - The ReflectionFile class
   - [ReflectionFile.constructor](#reflectionfileconstructor) - Constructs a ReflectionFile
@@ -236,6 +238,48 @@ function foo(param) {
 var endLine = file.getEndLine();
 console.log(endLine);
 // outputs "3"
+````
+
+#### ReflectionScope.getStartColumn()
+Get the starting column number
+
+##### Parameters
+This function has no parameters
+
+##### Return value
+**Number** The starting column number
+
+##### Examples
+```javascript
+// ./path/to/file.js
+function foo(param) {
+  console.log("helloworld");
+}
+
+var startColumn = file.getStartColumn();
+console.log(startColumn);
+// outputs "0"
+````
+
+#### ReflectionScope.getEndColumn()
+Get the ending column number
+
+##### Parameters
+This function has no parameters
+
+##### Return value
+**Number** The starting column number
+
+##### Examples
+```javascript
+// ./path/to/file.js
+function foo(param) {
+  console.log("helloworld");
+}
+
+var endColumn = file.getEndColumn();
+console.log(endColumn);
+// outputs "1"
 ````
 
 #### ReflectionScope.getVariables([name])
