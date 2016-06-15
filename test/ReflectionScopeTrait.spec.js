@@ -1,12 +1,12 @@
 var _ = require('lodash');
 var path = require('path');
 var JSONSelect = require('JSONSelect');
-var ReflectionScopeTrait = require('../src/ReflectionScopeTrait');
-var ReflectionAssignedFunctionExpression = require('../src/ReflectionAssignedFunctionExpression');
-var ReflectionFunctionExpression = require('../src/ReflectionFunctionExpression');
-var ReflectionFunctionDeclaration = require('../src/ReflectionFunctionDeclaration');
-var ReflectionFunction = require('../src/ReflectionFunction');
-var ReflectionVariable = require('../src/ReflectionVariable');
+var ReflectionScopeTrait = require('../lib/ReflectionScopeTrait');
+var ReflectionAssignedFunctionExpression = require('../lib/ReflectionAssignedFunctionExpression');
+var ReflectionFunctionExpression = require('../lib/ReflectionFunctionExpression');
+var ReflectionFunctionDeclaration = require('../lib/ReflectionFunctionDeclaration');
+var ReflectionFunction = require('../lib/ReflectionFunction');
+var ReflectionVariable = require('../lib/ReflectionVariable');
 
 describe('ReflectionScopeTrait', function () {
 
@@ -227,7 +227,7 @@ describe('ReflectionScopeTrait', function () {
     var context;
 
     beforeEach(function () {
-      scopeTraitReflection = new ReflectionFile('src/ReflectionScopeTrait');
+      scopeTraitReflection = new ReflectionFile('lib/ReflectionScopeTrait');
       context = {
         __cov_: __coverage__[scopeTraitReflection.getFilePath()]
       };
@@ -441,7 +441,7 @@ describe('ReflectionScopeTrait', function () {
 
         _.extend(context, {
           _: _,
-          ReflectionFunction: require('../src/ReflectionFunction')
+          ReflectionFunction: require('../lib/ReflectionFunction')
         });
 
         function invoke(type) {

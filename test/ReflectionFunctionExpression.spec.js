@@ -1,5 +1,5 @@
-var ReflectionFunctionExpression = require('../src/ReflectionFunctionExpression');
-var ReflectionFunction = require('../src/ReflectionFunction');
+var ReflectionFunctionExpression = require('../lib/ReflectionFunctionExpression');
+var ReflectionFunction = require('../lib/ReflectionFunction');
 
 describe('ReflectionFunctionExpression', function () {
 

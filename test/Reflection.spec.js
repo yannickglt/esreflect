@@ -1,4 +1,4 @@
-var Reflection = require('../src/Reflection');
+var Reflection = require('../lib/Reflection');
 
 describe('Reflection', function () {
 

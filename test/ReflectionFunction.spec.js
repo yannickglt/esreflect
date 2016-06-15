@@ -1,7 +1,7 @@
 var _ = require('lodash');
-var ReflectionFunction = require('../src/ReflectionFunction');
-var ReflectionScopeAbstract = require('../src/ReflectionScopeAbstract');
-var ReflectionScopeTrait = require('../src/ReflectionScopeTrait');
+var ReflectionFunction = require('../lib/ReflectionFunction');
+var ReflectionScopeAbstract = require('../lib/ReflectionScopeAbstract');
+var ReflectionScopeTrait = require('../lib/ReflectionScopeTrait');
 
 describe('ReflectionFunction', function () {
 

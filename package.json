@@ -2,7 +2,7 @@
   "name": "esreflect",
   "version": "0.1.3",
   "description": "ECMAScript library providing a reflection API for ECMAScript",
-  "main": "dist/esreflect.js",
+  "index": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/yannickglt/esreflect.git"
@@ -33,15 +33,16 @@
     "watchify": "^3.6.1"
   },
   "files": [
-    "src",
+    "index.js",
+    "lib",
     "dist",
     "README.md",
     "API.md",
     "LICENSE"
   ],
   "scripts": {
-    "watch": "watchify src/main.js -o dist/esreflect.js",
-    "build": "browserify src/main.js > dist/esreflect.js",
+    "watch": "watchify index.js -o dist/esreflect.js",
+    "build": "browserify index.js > dist/esreflect.js",
     "test": "karma start",
     "bump": "npm run build && npm version patch && npm publish && git push --tags origin master",
     "bump:minor": "npm run build && npm version minor && npm publish && git push --tags origin master",

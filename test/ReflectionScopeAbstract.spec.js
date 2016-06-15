@@ -1,5 +1,5 @@
-var ReflectionScopeAbstract = require('../src/ReflectionScopeAbstract');
-var Reflection = require('../src/Reflection');
+var ReflectionScopeAbstract = require('../lib/ReflectionScopeAbstract');
+var Reflection = require('../lib/Reflection');
 
 describe('ReflectionScopeAbstract', function () {
 

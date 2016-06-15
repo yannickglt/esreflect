@@ -1,6 +1,6 @@
 var _ = require('lodash');
-var ReflectionVariable = require('../src/ReflectionVariable');
-var Reflection = require('../src/Reflection');
+var ReflectionVariable = require('../lib/ReflectionVariable');
+var Reflection = require('../lib/Reflection');
 
 describe('ReflectionVariable', function () {
 
